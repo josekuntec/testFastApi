@@ -2,10 +2,13 @@ from fastapi import FastAPI, Form
 from typing import Annotated
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+import aiocron
+import requests
 
 app = FastAPI()
 
 origins = ["*"]
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -20,6 +23,10 @@ class FormData(BaseModel):
     primero: str
     segundo: str
 
+@aiocron.crontab("*/5 * * * *")
+async def self_ping():
+    response=requests.get("127.0.0.1:5001")
+    print(response["message"])
 
 @app.get("/")
 async def root():
