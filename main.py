@@ -25,7 +25,7 @@ class FormData(BaseModel):
 
 @aiocron.crontab("*/5 * * * *")
 async def self_ping():
-    response=requests.get("127.0.0.1:5001")
+    response=requests.get("https://testfastapi-y81m.onrender.com")
     print(response["message"])
 
 @app.get("/")
